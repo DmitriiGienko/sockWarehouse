@@ -5,11 +5,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class SickId implements Serializable {
+public class SockId implements Serializable {
     private String color;
     private int cottonPart;
+
 }

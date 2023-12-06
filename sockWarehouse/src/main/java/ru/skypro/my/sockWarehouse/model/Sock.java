@@ -12,16 +12,16 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@IdClass(SickId.class)
+@IdClass(SockId.class)
 
 public class Sock {
     //    private Long id;
     @Id
     private String color;
     @Id
-    @Column(name = "cotton_part", nullable = false)
+    @Column(name = "cotton_part")
     private Integer cottonPart;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     private Long quantity;
 }

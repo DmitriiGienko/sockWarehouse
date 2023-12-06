@@ -1,9 +1,9 @@
 package ru.skypro.my.sockWarehouse.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.*;
 import ru.skypro.my.sockWarehouse.model.Sock;
 
 @AllArgsConstructor
@@ -11,19 +11,27 @@ import ru.skypro.my.sockWarehouse.model.Sock;
 @Getter
 @NoArgsConstructor
 public class SockDTO {
+
+//    @NotBlank(message = "Обязательное поле")
     private String color;
-    private int cottonPart;
+
+//    @NotBlank(message = "Обязательное поле")
+//    @PositiveOrZero(message = "Значение не может быть отрицательным")
+    private Integer cottonPart;
+
+//    @NotBlank(message = "Обязательное поле")
+//    @Positive(message = "Значение должно быть положительным")
     private Long quantity;
 
     public static Sock getSock(SockDTO sockDTO) {
         Sock sock = new Sock();
-        sock.setColor(sockDTO.getColor());
+        sock.setColor(sockDTO.getColor().toLowerCase().trim());
         sock.setCottonPart(sockDTO.getCottonPart());
         sock.setQuantity(sockDTO.getQuantity());
         return sock;
     }
 
-    public static SockDTO getSock(Sock sock) {
+    public static SockDTO getSockDTO(Sock sock) {
         SockDTO sockDTO = new SockDTO();
         sockDTO.setColor(sock.getColor());
         sockDTO.setCottonPart(sock.getCottonPart());
