@@ -8,6 +8,6 @@ public interface SockService {
 
     void addSocks(SockDTO sockDTO);
     void removeSocks(SockDTO sockDTO);
-    int getNumberSocksRequested(String color, Operations operation, Integer cottonPart);
+    Integer getNumberSocksRequested(String color, Operations operation, Integer cottonPart);
 
 }

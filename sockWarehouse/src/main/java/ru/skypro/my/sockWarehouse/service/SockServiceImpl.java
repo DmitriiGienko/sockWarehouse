@@ -3,6 +3,8 @@ package ru.skypro.my.sockWarehouse.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.skypro.my.sockWarehouse.dto.SockDTO;
+import ru.skypro.my.sockWarehouse.exceptions.SockPresentsException;
+import ru.skypro.my.sockWarehouse.exceptions.SockQuantityException;
 import ru.skypro.my.sockWarehouse.model.Operations;
 import ru.skypro.my.sockWarehouse.model.Sock;
 import ru.skypro.my.sockWarehouse.model.SockId;
@@ -20,7 +22,7 @@ public class SockServiceImpl implements SockService {
     @Override
     public void addSocks(SockDTO sockDTO) {
         Sock sock = socksRepository
-                .findById(new SockId(sockDTO.getColor(), sockDTO.getCottonPart()))
+                .findById(getSockId(sockDTO))
                 .orElse(null);
         if (sock != null) {
             sock.setQuantity(sock.getQuantity() + sockDTO.getQuantity());
@@ -32,10 +34,32 @@ public class SockServiceImpl implements SockService {
     @Override
     public void removeSocks(SockDTO sockDTO) {
 
+        Sock sock = socksRepository
+                .findById(getSockId(sockDTO))
+                .orElseThrow(SockPresentsException::new);
+        if (sockDTO.getQuantity() > sock.getQuantity()) {
+            throw new SockQuantityException();
+        }
+        sock.setQuantity(sock.getQuantity() - sockDTO.getQuantity());
+        socksRepository.save(sock);
+
     }
 
     @Override
-    public int getNumberSocksRequested(String color, Operations operation, Integer cottonPart) {
-        return 0;
+    public Integer getNumberSocksRequested(String color, Operations operation, Integer cottonPart) {
+
+        Integer result = null;
+        switch (operation) {
+            case EQUAL -> result = socksRepository.sumOfSocksEqual(color.toLowerCase().trim(), cottonPart);
+            case LESS_THAN -> result = socksRepository.sumOfSocksLessThan(color.toLowerCase().trim(), cottonPart);
+            case MORE_THAN -> result = socksRepository.sumOfSocksMoreThan(color.toLowerCase().trim(), cottonPart);
+            default -> result = 0;
+        }
+        return result;
+    }
+
+    public SockId getSockId(SockDTO sockDTO) {
+        return new SockId(sockDTO.getColor().toLowerCase().trim(),
+                sockDTO.getCottonPart());
     }
 }
