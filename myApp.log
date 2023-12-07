@@ -1,5 +1,1 @@
 
-01:23:46.031 [http-nio-8080-exec-1] INFO  r.s.m.s.service.SockServiceImpl - Запрос - сколько пар носков цвета red с составом хлопка 70%
-01:23:46.144 [http-nio-8080-exec-1] INFO  r.s.m.s.service.SockServiceImpl - На запрос возвращено - 150
-01:23:54.562 [http-nio-8080-exec-2] INFO  r.s.m.s.service.SockServiceImpl - Запрос - сколько пар носков цвета red с составом хлопка 50%
-01:23:54.570 [http-nio-8080-exec-2] INFO  r.s.m.s.service.SockServiceImpl - На запрос возвращено - 100
