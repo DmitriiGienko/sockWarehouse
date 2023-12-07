@@ -15,13 +15,13 @@ public interface SocksRepository extends JpaRepository<Sock, SockId> {
     Optional<Sock> findById(SockId sockId);
 
     @Query("SELECT SUM(s.quantity) FROM Sock s WHERE s.color = :color AND s.cottonPart > :cottonPart")
-    Integer sumOfSocksMoreThan(@Param("color") String color, @Param("cottonPart") Integer cottonPart);
+    Optional<Integer> sumOfSocksMoreThan(@Param("color") String color, @Param("cottonPart") Integer cottonPart);
 
     @Query("SELECT SUM(s.quantity) FROM Sock s WHERE s.color = :color AND s.cottonPart < :cottonPart")
-    Integer sumOfSocksLessThan(@Param("color") String color, @Param("cottonPart") Integer cottonPart);
+    Optional<Integer> sumOfSocksLessThan(@Param("color") String color, @Param("cottonPart") Integer cottonPart);
 
     @Query(value = "SELECT quantity FROM sock WHERE color = :color AND cotton_part = :cottonPart",
             nativeQuery = true)
-    Integer sumOfSocksEqual(@Param("color") String color, @Param("cottonPart") Integer cottonPart);
+    Optional<Integer> sumOfSocksEqual(@Param("color") String color, @Param("cottonPart") Integer cottonPart);
 }
 

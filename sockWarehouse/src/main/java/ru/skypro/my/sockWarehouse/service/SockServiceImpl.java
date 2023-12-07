@@ -79,17 +79,20 @@ public class SockServiceImpl implements SockService {
             case EQUAL -> {
                 log.info("Запрос - сколько пар носков цвета {} с составом хлопка {}%",
                         color, cottonPart);
-                result = socksRepository.sumOfSocksEqual(color.toLowerCase().trim(), cottonPart);
+                result = socksRepository.sumOfSocksEqual(color.toLowerCase().trim(), cottonPart)
+                        .orElse(0);
             }
             case LESS_THAN -> {
                 log.info("Запрос - сколько пар носков цвета {} с составом хлопка меньше {}%",
                         color, cottonPart);
-                result = socksRepository.sumOfSocksLessThan(color.toLowerCase().trim(), cottonPart);
+                result = socksRepository.sumOfSocksLessThan(color.toLowerCase().trim(), cottonPart)
+                        .orElse(0);
             }
             case MORE_THAN -> {
                 log.info("Запрос - сколько пар носков цвета {} с составом хлопка больше {}%",
                         color, cottonPart);
-                result = socksRepository.sumOfSocksMoreThan(color.toLowerCase().trim(), cottonPart);
+                result = socksRepository.sumOfSocksMoreThan(color.toLowerCase().trim(), cottonPart)
+                        .orElse(0);
             }
         }
         log.info("На запрос возвращено - {}", result);
