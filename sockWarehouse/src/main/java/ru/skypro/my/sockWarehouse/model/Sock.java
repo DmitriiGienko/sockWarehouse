@@ -15,7 +15,6 @@ import lombok.Setter;
 @IdClass(SockId.class)
 
 public class Sock {
-    //    private Long id;
     @Id
     private String color;
     @Id

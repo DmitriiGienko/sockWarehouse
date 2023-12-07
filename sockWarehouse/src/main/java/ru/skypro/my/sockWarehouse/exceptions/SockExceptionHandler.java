@@ -21,4 +21,11 @@ public class SockExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body("Насков с такими данными нет на складе");
     }
+
+    @ExceptionHandler(SockInputsException.class)
+    public ResponseEntity<?> handleNotFound(SockInputsException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Введены неверные данные");
+    }
 }

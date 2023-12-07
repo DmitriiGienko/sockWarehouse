@@ -3,14 +3,13 @@ package ru.skypro.my.sockWarehouse.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.skypro.my.sockWarehouse.dto.SockDTO;
+import ru.skypro.my.sockWarehouse.exceptions.SockInputsException;
 import ru.skypro.my.sockWarehouse.exceptions.SockPresentsException;
 import ru.skypro.my.sockWarehouse.exceptions.SockQuantityException;
 import ru.skypro.my.sockWarehouse.model.Operations;
 import ru.skypro.my.sockWarehouse.model.Sock;
 import ru.skypro.my.sockWarehouse.model.SockId;
 import ru.skypro.my.sockWarehouse.repository.SocksRepository;
-
-import java.util.Objects;
 
 import static ru.skypro.my.sockWarehouse.dto.SockDTO.getSock;
 
@@ -21,6 +20,9 @@ public class SockServiceImpl implements SockService {
 
     @Override
     public void addSocks(SockDTO sockDTO) {
+        if (!validateInputs(sockDTO)) {
+            throw new SockInputsException();
+        }
         Sock sock = socksRepository
                 .findById(getSockId(sockDTO))
                 .orElse(null);
@@ -28,7 +30,6 @@ public class SockServiceImpl implements SockService {
             sock.setQuantity(sock.getQuantity() + sockDTO.getQuantity());
             socksRepository.save(sock);
         } else socksRepository.save(getSock(sockDTO));
-
     }
 
     @Override
@@ -42,13 +43,12 @@ public class SockServiceImpl implements SockService {
         }
         sock.setQuantity(sock.getQuantity() - sockDTO.getQuantity());
         socksRepository.save(sock);
-
     }
 
     @Override
     public Integer getNumberSocksRequested(String color, Operations operation, Integer cottonPart) {
 
-        Integer result = null;
+        Integer result;
         switch (operation) {
             case EQUAL -> result = socksRepository.sumOfSocksEqual(color.toLowerCase().trim(), cottonPart);
             case LESS_THAN -> result = socksRepository.sumOfSocksLessThan(color.toLowerCase().trim(), cottonPart);
@@ -61,5 +61,11 @@ public class SockServiceImpl implements SockService {
     public SockId getSockId(SockDTO sockDTO) {
         return new SockId(sockDTO.getColor().toLowerCase().trim(),
                 sockDTO.getCottonPart());
+    }
+
+    public boolean validateInputs(SockDTO sockDTO) {
+        return sockDTO.getQuantity() > 0 && (sockDTO.getCottonPart() >= 0
+                && sockDTO.getCottonPart() <= 100)
+                && !sockDTO.getColor().isEmpty();
     }
 }
