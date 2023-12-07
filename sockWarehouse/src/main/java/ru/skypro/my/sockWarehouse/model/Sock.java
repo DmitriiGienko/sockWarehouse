@@ -1,9 +1,6 @@
 package ru.skypro.my.sockWarehouse.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,10 +10,12 @@ import lombok.Setter;
 @Getter
 @Entity
 @IdClass(SockId.class)
+@Table(name = "sock")
 
 public class Sock {
     @Id
     private String color;
+
     @Id
     @Column(name = "cotton_part")
     private Integer cottonPart;

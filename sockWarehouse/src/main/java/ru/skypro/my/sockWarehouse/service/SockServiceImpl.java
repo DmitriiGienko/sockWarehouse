@@ -48,12 +48,11 @@ public class SockServiceImpl implements SockService {
     @Override
     public Integer getNumberSocksRequested(String color, Operations operation, Integer cottonPart) {
 
-        Integer result;
+        Integer result = 0;
         switch (operation) {
             case EQUAL -> result = socksRepository.sumOfSocksEqual(color.toLowerCase().trim(), cottonPart);
             case LESS_THAN -> result = socksRepository.sumOfSocksLessThan(color.toLowerCase().trim(), cottonPart);
             case MORE_THAN -> result = socksRepository.sumOfSocksMoreThan(color.toLowerCase().trim(), cottonPart);
-            default -> result = 0;
         }
         return result;
     }
