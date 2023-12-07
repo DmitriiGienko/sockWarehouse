@@ -13,16 +13,25 @@ public class SockController {
     @Autowired
     SockServiceImpl sockService;
 
+    /**
+     * Добавление носков на склад
+     */
     @PostMapping("/income")
     public void addSocks(@RequestBody SockDTO sockDTO) {
         sockService.addSocks(sockDTO);
     }
 
+    /**
+     * Выдача носков со склада
+     */
     @PostMapping("/outcome")
     public void removeSocks(@RequestBody SockDTO sockDTO) {
         sockService.removeSocks(sockDTO);
     }
 
+    /**
+     * Получение кол-ва пар носков по цвету и составу
+     */
     @GetMapping()
     public Integer getCountSocks(@RequestParam String color,
                                  @RequestParam Operations operations,

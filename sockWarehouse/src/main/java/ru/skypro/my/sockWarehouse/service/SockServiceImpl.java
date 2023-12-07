@@ -20,6 +20,9 @@ public class SockServiceImpl implements SockService {
     @Autowired
     SocksRepository socksRepository;
 
+    /**
+     * Добавление носков на склад
+     */
     @Override
     public void addSocks(SockDTO sockDTO) {
         if (validateInputs(sockDTO)) {
@@ -39,6 +42,9 @@ public class SockServiceImpl implements SockService {
         } else socksRepository.save(getSock(sockDTO));
     }
 
+    /**
+     * Выдача носков со склада
+     */
     @Override
     public void removeSocks(SockDTO sockDTO) {
 
@@ -62,6 +68,9 @@ public class SockServiceImpl implements SockService {
         socksRepository.save(sock);
     }
 
+    /**
+     * Получение кол-ва пар носков на складе по цвету и составу
+     */
     @Override
     public Integer getNumberSocksRequested(String color, Operations operation, Integer cottonPart) {
 
@@ -87,11 +96,17 @@ public class SockServiceImpl implements SockService {
         return result;
     }
 
+    /**
+     * Получение Id
+     */
     public SockId getSockId(SockDTO sockDTO) {
         return new SockId(sockDTO.getColor().toLowerCase().trim(),
                 sockDTO.getCottonPart());
     }
 
+    /**
+     * Валидация введенных данных пользователем
+     */
     public boolean validateInputs(SockDTO sockDTO) {
         return sockDTO.getQuantity() <= 0 || (sockDTO.getCottonPart() < 0
                 || sockDTO.getCottonPart() > 100)
