@@ -1,5 +1,6 @@
 package ru.skypro.my.sockWarehouse.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.skypro.my.sockWarehouse.dto.SockDTO;
@@ -14,18 +15,24 @@ import ru.skypro.my.sockWarehouse.repository.SocksRepository;
 import static ru.skypro.my.sockWarehouse.dto.SockDTO.getSock;
 
 @Service
+@Slf4j
 public class SockServiceImpl implements SockService {
     @Autowired
     SocksRepository socksRepository;
 
     @Override
     public void addSocks(SockDTO sockDTO) {
-        if (!validateInputs(sockDTO)) {
+        if (validateInputs(sockDTO)) {
+            log.warn("Неверный ввод {} пар носков цвета {} состав хлопка {}%",
+                    sockDTO.getQuantity(), sockDTO.getColor(), sockDTO.getCottonPart());
             throw new SockInputsException();
         }
         Sock sock = socksRepository
                 .findById(getSockId(sockDTO))
                 .orElse(null);
+        log.info("Добавление на склад {} пар носков цвета {} состав хлопка {}%",
+                sockDTO.getQuantity(), sockDTO.getColor(), sockDTO.getCottonPart());
+
         if (sock != null) {
             sock.setQuantity(sock.getQuantity() + sockDTO.getQuantity());
             socksRepository.save(sock);
@@ -35,12 +42,22 @@ public class SockServiceImpl implements SockService {
     @Override
     public void removeSocks(SockDTO sockDTO) {
 
+        if (validateInputs(sockDTO)) {
+            log.warn("Неверный ввод {} пар носков цвета {} состав хлопка {}%",
+                    sockDTO.getQuantity(), sockDTO.getColor(), sockDTO.getCottonPart());
+            throw new SockInputsException();
+        }
+
         Sock sock = socksRepository
                 .findById(getSockId(sockDTO))
                 .orElseThrow(SockPresentsException::new);
         if (sockDTO.getQuantity() > sock.getQuantity()) {
             throw new SockQuantityException();
         }
+
+        log.info("Выдано со склада {} пар носков цвета {} состав хлопка {}%",
+                sockDTO.getQuantity(), sockDTO.getColor(), sockDTO.getCottonPart());
+
         sock.setQuantity(sock.getQuantity() - sockDTO.getQuantity());
         socksRepository.save(sock);
     }
@@ -50,10 +67,23 @@ public class SockServiceImpl implements SockService {
 
         Integer result = 0;
         switch (operation) {
-            case EQUAL -> result = socksRepository.sumOfSocksEqual(color.toLowerCase().trim(), cottonPart);
-            case LESS_THAN -> result = socksRepository.sumOfSocksLessThan(color.toLowerCase().trim(), cottonPart);
-            case MORE_THAN -> result = socksRepository.sumOfSocksMoreThan(color.toLowerCase().trim(), cottonPart);
+            case EQUAL -> {
+                log.info("Запрос - сколько пар носков цвета {} с составом хлопка {}%",
+                        color, cottonPart);
+                result = socksRepository.sumOfSocksEqual(color.toLowerCase().trim(), cottonPart);
+            }
+            case LESS_THAN -> {
+                log.info("Запрос - сколько пар носков цвета {} с составом хлопка меньше {}%",
+                        color, cottonPart);
+                result = socksRepository.sumOfSocksLessThan(color.toLowerCase().trim(), cottonPart);
+            }
+            case MORE_THAN -> {
+                log.info("Запрос - сколько пар носков цвета {} с составом хлопка больше {}%",
+                        color, cottonPart);
+                result = socksRepository.sumOfSocksMoreThan(color.toLowerCase().trim(), cottonPart);
+            }
         }
+        log.info("На запрос возвращено - {}", result);
         return result;
     }
 
@@ -63,8 +93,8 @@ public class SockServiceImpl implements SockService {
     }
 
     public boolean validateInputs(SockDTO sockDTO) {
-        return sockDTO.getQuantity() > 0 && (sockDTO.getCottonPart() >= 0
-                && sockDTO.getCottonPart() <= 100)
-                && !sockDTO.getColor().isEmpty();
+        return sockDTO.getQuantity() <= 0 || (sockDTO.getCottonPart() < 0
+                || sockDTO.getCottonPart() > 100)
+                || sockDTO.getColor().isEmpty();
     }
 }
