@@ -111,7 +111,7 @@ public class SockServiceImpl implements SockService {
      * Валидация введенных данных пользователем
      */
     public boolean validateInputs(SockDTO sockDTO) {
-        return sockDTO.getQuantity() <= 0 || (sockDTO.getCottonPart() < 0
+        return sockDTO.getQuantity() <= 1 || (sockDTO.getCottonPart() <= 0
                 || sockDTO.getCottonPart() > 100)
                 || sockDTO.getColor().isEmpty();
     }
