@@ -1,7 +1,5 @@
 package ru.skypro.my.sockWarehouse.controller;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,13 +13,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.skypro.my.sockWarehouse.model.Operations;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static ru.skypro.my.sockWarehouse.controller.TestPrepare.getJsonObject;
-import static ru.skypro.my.sockWarehouse.controller.TestPrepare.getJsonObjectOperation;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -159,16 +154,79 @@ class SockControllerTest {
                 .andExpect(content().string("Введены неверные данные"));
     }
 
-
+    @DisplayName("Кол-во носков, оператор EQUAL")
     @Test
-    void getCountSocks() throws Exception {
+    void shouldGetCountSocksWithEqual_Ok() throws Exception {
 
         testPrepare.getDB();
 
-        mockMvc.perform(get("/api/socks")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(getJsonObjectOperation("red", Operations.EQUAL, 70).toString()))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/api/socks/")
+                        .param("color", "red")
+                        .param("operations", String.valueOf(Operations.EQUAL))
+                        .param("cottonPart", String.valueOf(70)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value("100"));
+    }
+
+    @DisplayName("Кол-во носков, оператор MORE_THAN")
+    @Test
+    void shouldGetCountSocksWithMoreThan_Ok() throws Exception {
+
+        testPrepare.getDB();
+
+        mockMvc.perform(get("/api/socks/")
+                        .param("color", "red")
+                        .param("operations", String.valueOf(Operations.MORE_THAN))
+                        .param("cottonPart", String.valueOf(35)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value("150"));
+    }
+
+    @DisplayName("Кол-во носков, оператор LESS_THAN")
+    @Test
+    void shouldGetCountSocksWithLessThan_Ok() throws Exception {
+
+        testPrepare.getDB();
+
+        mockMvc.perform(get("/api/socks/")
+                        .param("color", "red")
+                        .param("operations", String.valueOf(Operations.LESS_THAN))
+                        .param("cottonPart", String.valueOf(50)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value("50"));
+    }
+
+    @DisplayName("Кол-во носков, при отсутствии на складе заданного цвета")
+    @Test
+    void shouldGetCountSocksOtherColor_Ok() throws Exception {
+
+        testPrepare.getDB();
+
+        mockMvc.perform(get("/api/socks/")
+                        .param("color", "blue")
+                        .param("operations", String.valueOf(Operations.LESS_THAN))
+                        .param("cottonPart", String.valueOf(50)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value("0"));
+    }
+
+    @DisplayName("Кол-во носков, при отсутствии на складе заданного CottonPart")
+    @Test
+    void shouldGetCountSocksCottonPartAbsent_Ok() throws Exception {
+
+        testPrepare.getDB();
+
+        mockMvc.perform(get("/api/socks/")
+                        .param("color", "red")
+                        .param("operations", String.valueOf(Operations.LESS_THAN))
+                        .param("cottonPart", String.valueOf(40)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value("0"));
     }
 
 

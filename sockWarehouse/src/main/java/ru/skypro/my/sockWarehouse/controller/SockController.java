@@ -32,7 +32,7 @@ public class SockController {
     /**
      * Получение кол-ва пар носков по цвету и составу
      */
-    @GetMapping()
+    @GetMapping("/")
     public Integer getCountSocks(@RequestParam String color,
                                  @RequestParam Operations operations,
                                  @RequestParam Integer cottonPart) {

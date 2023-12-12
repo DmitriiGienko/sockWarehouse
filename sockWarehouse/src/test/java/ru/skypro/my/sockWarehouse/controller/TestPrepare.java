@@ -3,7 +3,6 @@ package ru.skypro.my.sockWarehouse.controller;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.skypro.my.sockWarehouse.model.Operations;
 import ru.skypro.my.sockWarehouse.model.Sock;
 import ru.skypro.my.sockWarehouse.repository.SocksRepository;
 
@@ -40,14 +39,5 @@ public class TestPrepare {
         return jsonObject;
     }
 
-    public static JSONObject getJsonObjectOperation(String color, Operations operation, Integer cottonPart) throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("color", color);
-        jsonObject.put("operation", operation);
-        jsonObject.put("cottonPart", cottonPart);
-
-        return jsonObject;
-    }
 }
 
