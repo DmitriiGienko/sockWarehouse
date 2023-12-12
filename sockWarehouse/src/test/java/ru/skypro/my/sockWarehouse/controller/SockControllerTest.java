@@ -1,7 +1,5 @@
 package ru.skypro.my.sockWarehouse.controller;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +32,6 @@ class SockControllerTest {
     void contextLoads() {
     }
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
 
     @DisplayName("Добавление на склад - Ok")
     @Test
