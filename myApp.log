@@ -1,1 +1,5 @@
 
+12:46:04.724 [http-nio-8080-exec-3] INFO  r.s.m.s.service.SockServiceImpl - Добавление на склад 1500 пар носков цвета white состав хлопка 100%
+12:46:36.889 [http-nio-8080-exec-6] INFO  r.s.m.s.service.SockServiceImpl - Выдано со склада 300 пар носков цвета white состав хлопка 100%
+12:47:02.296 [http-nio-8080-exec-5] INFO  r.s.m.s.service.SockServiceImpl - Запрос - сколько пар носков цвета white с составом хлопка 100%
+12:47:02.327 [http-nio-8080-exec-5] INFO  r.s.m.s.service.SockServiceImpl - На запрос возвращено - 1200

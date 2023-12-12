@@ -1,0 +1,26 @@
+12:43:50.805 [main] INFO  r.s.m.s.service.SockServiceImpl - Запрос - сколько пар носков цвета red с составом хлопка больше 35%
+12:43:50.861 [main] INFO  r.s.m.s.service.SockServiceImpl - На запрос возвращено - 150
+12:43:51.423 [main] INFO  r.s.m.s.service.SockServiceImpl - Выдано со склада 50 пар носков цвета red состав хлопка 70%
+12:43:51.878 [main] ERROR r.s.m.s.e.SockExceptionHandler - Ошибка - носков нет на складе
+12:43:52.287 [main] INFO  r.s.m.s.service.SockServiceImpl - Запрос - сколько пар носков цвета blue с составом хлопка меньше 50%
+12:43:52.290 [main] INFO  r.s.m.s.service.SockServiceImpl - На запрос возвращено - 0
+12:43:52.649 [main] WARN  r.s.m.s.service.SockServiceImpl - Неверный ввод 100 пар носков цвета  состав хлопка 50%
+12:43:52.650 [main] ERROR r.s.m.s.e.SockExceptionHandler - Ошибка ввода данных
+12:43:53.048 [main] INFO  r.s.m.s.service.SockServiceImpl - Запрос - сколько пар носков цвета red с составом хлопка меньше 50%
+12:43:53.051 [main] INFO  r.s.m.s.service.SockServiceImpl - На запрос возвращено - 50
+12:43:53.417 [main] INFO  r.s.m.s.service.SockServiceImpl - Запрос - сколько пар носков цвета red с составом хлопка меньше 40%
+12:43:53.420 [main] INFO  r.s.m.s.service.SockServiceImpl - На запрос возвращено - 0
+12:43:53.780 [main] WARN  r.s.m.s.service.SockServiceImpl - Неверный ввод 0 пар носков цвета color1 состав хлопка 50%
+12:43:53.780 [main] ERROR r.s.m.s.e.SockExceptionHandler - Ошибка ввода данных
+12:43:54.112 [main] ERROR r.s.m.s.e.SockExceptionHandler - Ошибка - недостаточно носков на складе
+12:43:54.450 [main] INFO  r.s.m.s.service.SockServiceImpl - Добавление на склад 100 пар носков цвета color1 состав хлопка 50%
+12:43:54.782 [main] WARN  r.s.m.s.service.SockServiceImpl - Неверный ввод 100 пар носков цвета color1 состав хлопка -50%
+12:43:54.783 [main] ERROR r.s.m.s.e.SockExceptionHandler - Ошибка ввода данных
+12:43:55.103 [main] WARN  r.s.m.s.service.SockServiceImpl - Неверный ввод 0 пар носков цвета color1 состав хлопка 50%
+12:43:55.104 [main] ERROR r.s.m.s.e.SockExceptionHandler - Ошибка ввода данных
+12:43:55.435 [main] INFO  r.s.m.s.service.SockServiceImpl - Запрос - сколько пар носков цвета red с составом хлопка 70%
+12:43:55.464 [main] INFO  r.s.m.s.service.SockServiceImpl - На запрос возвращено - 100
+12:43:56.097 [main] WARN  r.s.m.s.service.SockServiceImpl - Неверный ввод 100 пар носков цвета color1 состав хлопка -50%
+12:43:56.098 [main] ERROR r.s.m.s.e.SockExceptionHandler - Ошибка ввода данных
+12:43:56.460 [main] WARN  r.s.m.s.service.SockServiceImpl - Неверный ввод 100 пар носков цвета  состав хлопка 50%
+12:43:56.460 [main] ERROR r.s.m.s.e.SockExceptionHandler - Ошибка ввода данных
