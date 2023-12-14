@@ -1,0 +1,26 @@
+databaseChangeLog:
+ - changeSet:
+     id: 1 #Идентификатор набора изменений
+     author: Dmitrii_Gienko # Имя разработчика, который добавил набор изменений
+     changes: # список изменений в этом наборе
+       - tagDatabase: # liquibase — устанавливаем тег состоянию базы данных
+           tag: 1.0 # указываем значение тега
+       - createTable: # команда liquibase — данная команда создает таблицу
+            tableName: sock # название таблицы
+            columns: # колонки к данной таблице
+             - column: # колонка
+                  name: color # название колонки
+                  type: varchar(64) # тип
+                  constraints: # ограничения колонки
+                    primaryKey: true
+             - column:
+                  name: cotton_part
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+             - column:
+                  name: quantity
+                  type: BIGINT
+                  constraints:
+                    nullable: false
